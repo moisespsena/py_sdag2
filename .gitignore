@@ -1,0 +1,11 @@
+.*
+*~
+*.swp
+*.pyc
+*.egg*
+venv
+__pycache__
+build
+bin
+dist
+./venv
