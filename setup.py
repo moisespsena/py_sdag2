@@ -45,7 +45,7 @@ class CleanCommand(Command):
                 else:
                     print("Remove file     : " + p)
                     os.unlink(p)
-
+print('tests.' + pkg_by_version("p") + ".test_all")
 setup(
     name="py_sdag2",
     version="1.0",
@@ -65,8 +65,10 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
+        "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3"
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.2",
     ],
     cmdclass={'clean': CleanCommand}
 )

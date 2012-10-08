@@ -4,7 +4,7 @@ Created on Oct 2, 2012
 @author: Moises P. Sena
 '''
 import unittest
-from py_sdag2 import DAG, CycleDetectedException
+from sdag2 import DAG, CycleDetectedException
 
 class DAGTest(unittest.TestCase):    
     def test_simple(self):
