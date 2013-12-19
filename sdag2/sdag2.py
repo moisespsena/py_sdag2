@@ -10,6 +10,7 @@ VISITED = 2
 import sys
 _range = xrange if sys.version_info < (3,) else range
 
+
 class CycleDetectedException(Exception):
     def __init__(self, value, cycle):
         self.cycle = cycle
@@ -17,6 +18,7 @@ class CycleDetectedException(Exception):
 
     def __str__(self):
         return self.value
+
 
 class CycleDetector:
     def __init__(self, dag):
@@ -31,7 +33,7 @@ class CycleDetector:
             if self.not_visited(vertex, state_map):
                 retValue = self.introduces_cycle(vertex, state_map)
 
-                if retValue == None:
+                if retValue is None:
                     break
 
     has = property(lambda self: self._has())
@@ -59,7 +61,7 @@ class CycleDetector:
         return False
 
     def introduces_cycle(self, vertex, state_map=None):
-        if state_map == None:
+        if state_map is None:
             state_map = dict()
 
         cycle_stack = []
@@ -84,7 +86,7 @@ class CycleDetector:
     def dfs_visit(self, vertex, cycle, state_map):
         cycle.insert(0, vertex)
 
-        state_map[ vertex ] = VISITING
+        state_map[vertex] = VISITING
 
         verticies = vertex.children
 
@@ -105,6 +107,7 @@ class CycleDetector:
         del cycle[0]
 
         return False
+
 
 class Vertex:
     def __init__(self, key):
@@ -180,10 +183,12 @@ class Vertex:
     def __hash__(self):
         return self.key.__hash__()
 
+
 class _node:
     def __init__(self):
         self.data = None
         self.next = None
+
 
 class _LinkedList:
     def __init__(self):
@@ -191,10 +196,10 @@ class _LinkedList:
         self.current = None
 
     def add_on_head(self, data):
-        new_node = _node() # create a new node
+        new_node = _node()  # create a new node
         new_node.data = data
-        new_node.next = self.head # link the new node to the 'previous' node.
-        self.head = new_node #  set the current node to the new one.
+        new_node.next = self.head  # link the new node to the 'previous' node.
+        self.head = new_node  # set the current node to the new one.
 
     def reset(self):
         self.current = self.head
@@ -243,13 +248,15 @@ class _LinkedList:
     def __iter__(self):
         return self.to_gen()
 
+
 def _sort_topologicaly(source, gen=False):
     if isinstance(source, Vertex):
         rs = _sort_vertex(source, gen=gen)
     elif isinstance(source, DAG):
-        rs = _dfs(source, gen=gen);
+        rs = _dfs(source, gen=gen)
 
     return rs
+
 
 def _sort_vertex(vertex, gen=False):
     lis = _LinkedList()
@@ -260,6 +267,7 @@ def _sort_vertex(vertex, gen=False):
         return lis.to_gen()
     else:
         return lis.to_list()
+
 
 def _dfs(graph, gen=False):
     lis = _LinkedList()
@@ -274,25 +282,28 @@ def _dfs(graph, gen=False):
     else:
         return lis.to_list()
 
+
 def _is_not_visited(vertex, state_map):
     if not vertex in state_map:
         return True
 
-    state = state_map[ vertex ]
+    state = state_map[vertex]
 
     return NOT_VISITED == state
+
 
 def _dfs_visit(vertex, state_map, lis):
     state_map[vertex] = VISITING
 
-    verticies = vertex.children;
+    verticies = vertex.children
 
     for v in verticies:
         if _is_not_visited(v, state_map):
             _dfs_visit(v, state_map, lis)
 
-    state_map[vertex] = VISITED;
-    lis.add_on_head(vertex);
+    state_map[vertex] = VISITED
+    lis.add_on_head(vertex)
+
 
 class DAG:
     def __init__(self):
@@ -337,10 +348,11 @@ class DAG:
         detector = CycleDetector(self)
         cycle = detector.introduces_cycle(to_vertex)
 
-        if cycle != None:
+        if cycle is not None:
             self.rm_edge(from_vertex, to_vertex)
 
-            msg = "Edge between '" + str(from_vertex) + "' and '" + str(to_vertex) + "' introduces to cycle in the graph"
+            msg = ("Edge between '%s' and '%s' introduces a "
+                   "cycle in the graph") % (from_vertex, to_vertex)
 
             raise CycleDetectedException(msg, [v.key for v in cycle])
 
