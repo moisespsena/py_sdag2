@@ -162,7 +162,7 @@ class Vertex:
     is_connected = property(lambda self: self._is_connected())
     
     def __str__(self):
-        return "Vertex{" + self.key + "}"
+        return "Vertex{%s}" % (self.key,)
     
     def __eq__(self, other):
         if isinstance(other, Vertex):
