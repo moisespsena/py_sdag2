@@ -54,7 +54,32 @@ class DAGTest(unittest.TestCase):
             # add cicle at A --> C --> A
             dag.add_edge(a, c)
             raise Exception("Cycle not detected")
-        except CycleDetectedException: pass
+        except CycleDetectedException, err:
+            _x = str(err)
+
+    def test_cicle_detect_tuples(self):
+        '''
+        Tests the verticles order in:
+        
+        a --> b --> c --> a
+
+        '''
+        
+        dag = DAG()
+        a = dag.add(1)
+        b = dag.add((1, 'b', None))
+        c = dag.add(frozenset((2, 'c')))
+        
+        dag.add_edge(a, b)
+        dag.add_edge(b, c)
+        
+        try:
+            # add cicle at a --> b --> c --> a
+            dag.add_edge(c, a)
+            dag.add_edge(a, c)
+            raise Exception("Cycle not detected")
+        except CycleDetectedException, err:
+            _x = str(err)
 
 def main():
     unittest.main()
