@@ -3,12 +3,13 @@ Created on Oct 1, 2012
 
 @author: Moises P. Sena
 '''
-__version__= '1.0.1'
+import sys
+
+__version__ = '1.0.1'
 NOT_VISITED = 0
 VISITING = 1
 VISITED = 2
 
-import sys
 _range = xrange if sys.version_info < (3,) else range
 
 
