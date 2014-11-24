@@ -11,7 +11,7 @@ from decutils import decorator, Decs
 import sys
 _range = xrange if sys.version_info < (3,) else range
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 NOT_VISITED = 0
 VISITING = 1
 VISITED = 2

@@ -1,6 +1,6 @@
-===========================================
+============================================
 SDAG2 - Python Simple Directed Acyclic Graph
-===========================================
+============================================
 
 The Python Simple Directed Graph whith Cicle Detector and TopoloGical sorter utilities.
 
@@ -11,6 +11,7 @@ This project was be hosted on `Github`_.
 
 Authors
 -------
+
 - `Moises P. Sena`_
 
 Install

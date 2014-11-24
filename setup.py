@@ -19,11 +19,6 @@ def read(fname):
         return f.read()
 
 
-def current_version():
-    import sdag2
-    return sdag2.__version__
-
-
 class CleanCommand(Command):
     user_options = []
 
@@ -57,10 +52,9 @@ class CleanCommand(Command):
                     print("Remove file     : " + p)
                     os.unlink(p)
 
-
 setup(
     name="sdag2",
-    version=current_version(),
+    version='1.0.2',
     author="Moises P. Sena",
     author_email="moisespsena@gmail.com",
     description=("Python Simple Directed Acyclic Graph whith Cicle Detector "
@@ -82,5 +76,8 @@ setup(
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
     ],
-    cmdclass={'clean': CleanCommand}
+    cmdclass={'clean': CleanCommand},
+    install_requires=[
+        'decutils'
+    ]
 )
