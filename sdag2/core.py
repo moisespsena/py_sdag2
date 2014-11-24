@@ -21,7 +21,7 @@ VISITED = 2
 class CycleDetectedException(Exception):
     def __init__(self, value, cycle):
         self.cycle = cycle
-        self.value = "%s: { %s }" % (value, " --> ".join(cycle),)
+        self.value = "%s: { %s }" % (value, " --> ".join(map(str, cycle)))
 
     def __str__(self):
         return self.value
