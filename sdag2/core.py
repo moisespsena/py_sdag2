@@ -8,14 +8,14 @@ Created on Feb 15, 2013
 '''
 
 from decutils import decorator, Decs
+import sys
+_range = xrange if sys.version_info < (3,) else range
 
+__version__ = '1.0.1'
 NOT_VISITED = 0
 VISITING = 1
 VISITED = 2
 
-import sys
-
-_range = xrange if sys.version_info < (3,) else range
 
 
 class CycleDetectedException(Exception):
@@ -40,7 +40,7 @@ class CycleDetector:
             if self.not_visited(vertex, state_map):
                 retValue = self.introduces_cycle(vertex, state_map)
 
-                if retValue == None:
+                if retValue is None:
                     break
 
     has = property(lambda self: self._has())
@@ -68,7 +68,7 @@ class CycleDetector:
         return False
 
     def introduces_cycle(self, vertex, state_map=None):
-        if state_map == None:
+        if state_map is None:
             state_map = dict()
 
         cycle_stack = []
@@ -172,7 +172,7 @@ class Vertex:
     is_connected = property(lambda self: self._is_connected())
 
     def __str__(self):
-        return "Vertex{" + self.key + "}"
+        return "Vertex{%s}" % (self.key,)
 
     def __eq__(self, other):
         if isinstance(other, Vertex):
@@ -203,7 +203,7 @@ class _LinkedList:
         self.current = None
 
     def add_on_head(self, data):
-        new_node = _node() # create a new node
+        new_node = _node()  # create a new node
         new_node.data = data
         new_node.next = self.head # link the new node to the 'previous' node.
         self.head = new_node # set the current node to the new one.
@@ -260,7 +260,7 @@ def _sort_topologicaly(source, gen=False):
     if isinstance(source, Vertex):
         rs = _sort_vertex(source, gen=gen)
     elif isinstance(source, DAG):
-        rs = _dfs(source, gen=gen);
+        rs = _dfs(source, gen=gen)
 
     return rs
 
@@ -302,14 +302,14 @@ def _is_not_visited(vertex, state_map):
 def _dfs_visit(vertex, state_map, lis):
     state_map[vertex] = VISITING
 
-    verticies = vertex.children;
+    verticies = vertex.children
 
     for v in verticies:
         if _is_not_visited(v, state_map):
             _dfs_visit(v, state_map, lis)
 
-    state_map[vertex] = VISITED;
-    lis.add_on_head(vertex);
+    state_map[vertex] = VISITED
+    lis.add_on_head(vertex)
 
 
 class DAG:
@@ -355,11 +355,11 @@ class DAG:
         detector = CycleDetector(self)
         cycle = detector.introduces_cycle(to_vertex)
 
-        if cycle != None:
+        if cycle is not None:
             self.rm_edge(from_vertex, to_vertex)
 
-            msg = "Edge between '" + str(from_vertex) + "' and '" + str(
-                to_vertex) + "' introduces to cycle in the graph"
+            msg = ("Edge between '%s' and '%s' introduces a "
+                   "cycle in the graph") % (from_vertex, to_vertex)
 
             raise CycleDetectedException(msg, [v.key for v in cycle])
 

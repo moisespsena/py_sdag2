@@ -19,6 +19,11 @@ def read(fname):
         return f.read()
 
 
+def current_version():
+    import sdag2
+    return sdag2.__version__
+
+
 class CleanCommand(Command):
     user_options = []
 
@@ -31,8 +36,8 @@ class CleanCommand(Command):
 
         for root, dirs, files in os.walk(THIS_PATH):
             for f in files:
-                if f.endswith(".pyc") or f.endswith(".pyc") or f.endswith(
-                        ".pyo"):
+                if f.endswith(".pyc") or f.endswith(".pyc") or \
+                        f.endswith(".pyo"):
                     self.paths.append(os.path.join(root, f))
 
             for f in dirs:
@@ -55,7 +60,7 @@ class CleanCommand(Command):
 
 setup(
     name="sdag2",
-    version="1.0",
+    version=current_version(),
     author="Moises P. Sena",
     author_email="moisespsena@gmail.com",
     description=("Python Simple Directed Acyclic Graph whith Cicle Detector "
