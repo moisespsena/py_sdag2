@@ -26,7 +26,7 @@ class CleanCommand(Command):
         self.paths = []
 
         for f in os.listdir(THIS_PATH):
-            if re.search("(^(build|dist|__pycache__)$|\.egg-info)", f):
+            if re.search("(^(build|dist|__pycache__|\.eggs)$|\.egg-info)", f):
                 self.paths.append(f)
 
         for root, dirs, files in os.walk(THIS_PATH):
@@ -52,9 +52,10 @@ class CleanCommand(Command):
                     print("Remove file     : " + p)
                     os.unlink(p)
 
+
 setup(
     name="sdag2",
-    version='1.0.3',
+    version='1.0.4',
     author="Moises P. Sena",
     author_email="moisespsena@gmail.com",
     description=("Python Simple Directed Acyclic Graph whith Cicle Detector "

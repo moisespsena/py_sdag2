@@ -21,5 +21,5 @@ _cmd() {
     } || _ce "$1 not found"
 }
 
-_cmd py2
-_cmd py3
+_cmd python2
+_cmd python3
