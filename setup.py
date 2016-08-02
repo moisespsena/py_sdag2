@@ -54,7 +54,7 @@ class CleanCommand(Command):
 
 setup(
     name="sdag2",
-    version='1.0.2',
+    version='1.0.3',
     author="Moises P. Sena",
     author_email="moisespsena@gmail.com",
     description=("Python Simple Directed Acyclic Graph whith Cicle Detector "
